@@ -1,20 +1,20 @@
 # syntax=docker/dockerfile:experimental
 
-ARG BASE_IMAGE="ohyee/blotter:deps_${BASE_VERSION}"
-ARG DEPS_IMAGE="ohyee/blotter:deps_${DEPS_VERSION}"
+ARG BASE_IMAGE="ohyee/blotter:deps_0"
+ARG DEPS_IMAGE="ohyee/blotter:deps_0"
 
 FROM ${DEPS_IMAGE} AS builder
 
 WORKDIR /data/blotter
 
 # deps cache
-COPY ./go.mod ./go.sum /data/blotter/
+COPY ./blotter/go.mod ./blotter/go.sum /data/blotter/
 RUN go mod download -x 
 RUN go build all
 
 # build code
 # build with cache: https://github.com/golang/go/issues/27719
-COPY ./ /data/blotter
+COPY ./blotter/ /data/blotter
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     go generate

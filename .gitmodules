@@ -1,0 +1,6 @@
+[submodule "blotter"]
+	path = blotter
+	url = git@github.com:OhYee/blotter.git
+[submodule "blotter_page"]
+	path = blotter_page
+	url = git@github.com:OhYee/blotter_page.git
